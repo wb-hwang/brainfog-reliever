@@ -8,22 +8,22 @@
     --font-sans: 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif';
     --font-mono: 'Courier New', 'monospace';
     
-    /* 颜色方案 */
-    --color-bg: #f6f9fc;
+    /* 颜色方案 - 更接近截图的配色 */
+    --color-bg: #eef3fb;
     --color-text: #2d3748;
     --color-text-light: #718096;
     --color-surface: #ffffff;
     --color-border: #e2e8f0;
 
-    /* 颜色主题 */
-    --color-ready: #6366f1;
-    --color-breathe: #38bdf8;
+    /* 颜色主题 - 更接近截图的配色 */
+    --color-ready: #6c63ff;
+    --color-breathe: #4dabf7;
     --color-hold: #fb923c;
     --color-done: #4ade80;
     
-    --color-button-bg: #6366f1;
+    --color-button-bg: #6c63ff;
     --color-button-text: #fff;
-    --color-button-hover-bg: #4f46e5;
+    --color-button-hover-bg: #5a51e0;
 
     /* 阴影 */
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
@@ -53,7 +53,7 @@ body {
     min-height: 100vh;
     padding: 1.5rem;
     line-height: 1.6;
-    background: linear-gradient(135deg, #f6f9fc 0%, #e6f0f9 100%);
+    background: linear-gradient(135deg, #eef3fb 0%, #e5eeff 100%);
     color: var(--color-text);
     display: flex;
     flex-direction: column;
@@ -76,11 +76,21 @@ body {
     font-size: 2.25rem;
     font-weight: 700;
     margin-bottom: 0.75rem;
-    background: linear-gradient(135deg, var(--color-ready) 0%, var(--color-breathe) 100%);
+    background: linear-gradient(135deg, #6c63ff 0%, #4dabf7 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-fill-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.app-header h1 .fas {
+    font-size: 1.2em;
+    margin-right: 0.5rem;
+    color: #6c63ff;
+    -webkit-text-fill-color: #6c63ff;
 }
 
 .description {
@@ -118,7 +128,7 @@ body {
     align-items: center;
     gap: 2rem;
     width: 100%;
-    max-width: 420px;
+    max-width: 480px;
     border: 1px solid rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -134,13 +144,13 @@ body {
 /* 设置区域 */
 .settings {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     width: 100%;
-    gap: 1.25rem;
+    gap: 1.5rem;
     transition: var(--transition-fast);
     background-color: rgba(246, 249, 252, 0.5);
     border-radius: var(--border-radius);
-    padding: 1rem;
+    padding: 1.25rem;
 }
 
 .settings.hidden {
@@ -156,29 +166,40 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 0.85rem;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    min-width: 90px;
 }
 
 .setting-item label {
     font-weight: 500;
     color: var(--color-text);
+    display: flex;
+    align-items: center;
+}
+
+.setting-item label .fas {
+    margin-right: 0.4rem;
+    color: #6c63ff;
 }
 
 select {
     font-family: var(--font-sans);
-    padding: 0.4rem 0.8rem;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    min-width: 70px;
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius);
     background-color: var(--color-surface);
     box-shadow: var(--shadow-sm);
     transition: var(--transition-fast);
     cursor: pointer;
+    text-align: center;
 }
 
 select:hover, select:focus {
     border-color: var(--color-ready);
-    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
+    box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.1);
 }
 
 /* 自定义复选框 */
@@ -245,7 +266,7 @@ select:hover, select:focus {
     stroke-width: 14;
     stroke-linecap: round;
     transition: stroke-dashoffset 1s linear, stroke 0.5s ease-in-out;
-    filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.5));
+    filter: drop-shadow(0 0 5px rgba(108, 99, 255, 0.5));
 }
 
 .timer-display {
@@ -279,6 +300,7 @@ select:hover, select:focus {
     line-height: 1;
     margin-bottom: 0.75rem;
     position: relative;
+    color: #333;
 }
 
 .time-left::after {
@@ -312,13 +334,6 @@ select:hover, select:focus {
     margin-right: 0.4rem;
 }
 
-.app-header h1 .fas {
-    font-size: 0.9em;
-    vertical-align: middle;
-    margin-right: 0.5rem;
-    color: var(--color-breathe);
-}
-
 .control-btn .fas {
     font-size: 0.9em;
 }
@@ -331,7 +346,7 @@ select:hover, select:focus {
     padding: 0.9rem 3rem;
     border: none;
     border-radius: var(--border-radius-full);
-    background: linear-gradient(135deg, var(--color-ready) 0%, var(--color-button-hover-bg) 100%);
+    background: linear-gradient(135deg, #6c63ff 0%, #5a51e0 100%);
     color: var(--color-button-text);
     cursor: pointer;
     transition: var(--transition-fast);
@@ -352,7 +367,7 @@ select:hover, select:focus {
 
 .control-btn:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3), var(--shadow-md);
+    box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.3), var(--shadow-md);
 }
 
 .control-btn::after {
@@ -388,15 +403,15 @@ select:hover, select:focus {
 @keyframes breatheAnimation {
     0% {
         transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(56, 189, 248, 0);
+        box-shadow: 0 0 0 0 rgba(77, 171, 247, 0);
     }
     50% {
         transform: scale(1.05);
-        box-shadow: 0 0 30px 5px rgba(56, 189, 248, 0.3);
+        box-shadow: 0 0 30px 5px rgba(77, 171, 247, 0.3);
     }
     100% {
         transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(56, 189, 248, 0);
+        box-shadow: 0 0 0 0 rgba(77, 171, 247, 0);
     }
 }
 
@@ -430,6 +445,34 @@ select:hover, select:focus {
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* 添加GitHub链接样式 */
+.github-link {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.github-link a {
+    color: #333;
+    text-decoration: none;
+    transition: var(--transition-fast);
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3rem 0.8rem;
+    background-color: #f6f8fa;
+    border: 1px solid #e1e4e8;
+    border-radius: var(--border-radius);
+}
+
+.github-link a:hover {
+    background-color: #f3f4f6;
+    text-decoration: none;
+    color: #000;
+}
+
+.github-link .fab {
+    font-size: 1.1em;
+}
+
 /* 响应式布局 */
 @media (max-width: 480px) {
     body {
@@ -448,11 +491,13 @@ select:hover, select:focus {
     .settings {
         flex-direction: column;
         align-items: stretch;
+        padding: 1rem;
     }
 
     .setting-item {
         flex-direction: row;
         justify-content: space-between;
+        min-width: auto;
     }
     
     .timer {
