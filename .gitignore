@@ -1,0 +1,14 @@
+
+
+# 编辑器和IDE文件
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+
+
+
+# 项目文档（开发过程中的文档，不需要提交到GitHub）
+project_document/ 

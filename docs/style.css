@@ -1,0 +1,494 @@
+/* ---
+    [P3-LD-002] & [P3-LD-003]
+    基本样式、布局、SVG进度条样式
+--- */
+
+/* CSS 变量 */
+:root {
+    --font-sans: 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif';
+    --font-mono: 'Courier New', 'monospace';
+    
+    /* 颜色方案 */
+    --color-bg: #f6f9fc;
+    --color-text: #2d3748;
+    --color-text-light: #718096;
+    --color-surface: #ffffff;
+    --color-border: #e2e8f0;
+
+    /* 颜色主题 */
+    --color-ready: #6366f1;
+    --color-breathe: #38bdf8;
+    --color-hold: #fb923c;
+    --color-done: #4ade80;
+    
+    --color-button-bg: #6366f1;
+    --color-button-text: #fff;
+    --color-button-hover-bg: #4f46e5;
+
+    /* 阴影 */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 1px 3px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+    
+    --border-radius: 12px;
+    --border-radius-lg: 16px;
+    --border-radius-full: 9999px;
+    --transition-fast: all 0.3s ease-in-out;
+}
+
+/* 全局与基础样式 */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    font-family: var(--font-sans);
+    min-height: 100vh;
+    padding: 1.5rem;
+    line-height: 1.6;
+    background: linear-gradient(135deg, #f6f9fc 0%, #e6f0f9 100%);
+    color: var(--color-text);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 布局与组件样式 */
+.app-header, .app-footer {
+    text-align: center;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.app-header {
+    margin-bottom: 2rem;
+}
+
+.app-header h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    background: linear-gradient(135deg, var(--color-ready) 0%, var(--color-breathe) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}
+
+.description {
+    color: var(--color-text-light);
+    font-size: 0.95rem;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.app-footer {
+    margin-top: 2rem;
+    font-size: 0.85rem;
+    color: var(--color-text-light);
+}
+
+.app-footer a {
+    color: var(--color-ready);
+    text-decoration: none;
+    transition: var(--transition-fast);
+    font-weight: 500;
+}
+
+.app-footer a:hover {
+    text-decoration: underline;
+    color: var(--color-button-hover-bg);
+}
+
+.timer-container {
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+    max-width: 420px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+.timer-container:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg), 0 15px 30px -10px rgba(0, 0, 0, 0.1);
+}
+
+/* 设置区域 */
+.settings {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    gap: 1.25rem;
+    transition: var(--transition-fast);
+    background-color: rgba(246, 249, 252, 0.5);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+}
+
+.settings.hidden {
+    opacity: 0;
+    transform: translateY(-20px);
+    height: 0;
+    overflow: hidden;
+    margin-bottom: -2rem;
+    padding: 0;
+}
+
+.setting-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.setting-item label {
+    font-weight: 500;
+    color: var(--color-text);
+}
+
+select {
+    font-family: var(--font-sans);
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-fast);
+    cursor: pointer;
+}
+
+select:hover, select:focus {
+    border-color: var(--color-ready);
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
+}
+
+/* 自定义复选框 */
+.sound-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 3rem;
+    height: 1.5rem;
+    background-color: #e2e8f0;
+    border-radius: var(--border-radius-full);
+    position: relative;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    box-shadow: var(--shadow-inner);
+}
+
+.sound-checkbox::before {
+    content: '';
+    position: absolute;
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 50%;
+    top: 0.15rem;
+    left: 0.15rem;
+    background-color: white;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-fast);
+}
+
+.sound-checkbox:checked {
+    background-color: var(--color-ready);
+}
+
+.sound-checkbox:checked::before {
+    transform: translateX(1.5rem);
+}
+
+/* 计时器核心 */
+.timer {
+    position: relative;
+    width: 280px;
+    height: 280px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5rem 0;
+}
+
+.progress-ring {
+    transform: rotate(-90deg);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.progress-ring__bg {
+    fill: none;
+    stroke: rgba(226, 232, 240, 0.6);
+    stroke-width: 14;
+    stroke-linecap: round;
+}
+
+.progress-ring__fg {
+    fill: none;
+    stroke: var(--color-ready);
+    stroke-width: 14;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s linear, stroke 0.5s ease-in-out;
+    filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.5));
+}
+
+.timer-display {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 1rem;
+}
+
+.phase-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.75rem;
+    color: var(--color-ready);
+    transition: color 0.5s ease-in-out;
+}
+
+.time-left {
+    font-family: var(--font-mono);
+    font-size: 4rem;
+    font-weight: 300;
+    line-height: 1;
+    margin-bottom: 0.75rem;
+    position: relative;
+}
+
+.time-left::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    width: 40px;
+    height: 2px;
+    background: currentColor;
+    transform: translateX(-50%) scaleX(0);
+    transition: transform 0.3s ease;
+    opacity: 0.3;
+}
+
+.timer:hover .time-left::after {
+    transform: translateX(-50%) scaleX(1);
+}
+
+.phase-instruction {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    max-width: 200px;
+    text-align: center;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+/* 图标样式 */
+.fas, .fab {
+    margin-right: 0.4rem;
+}
+
+.app-header h1 .fas {
+    font-size: 0.9em;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    color: var(--color-breathe);
+}
+
+.control-btn .fas {
+    font-size: 0.9em;
+}
+
+/* 控制按钮 */
+.control-btn {
+    font-family: var(--font-sans);
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 0.9rem 3rem;
+    border: none;
+    border-radius: var(--border-radius-full);
+    background: linear-gradient(135deg, var(--color-ready) 0%, var(--color-button-hover-bg) 100%);
+    color: var(--color-button-text);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    box-shadow: var(--shadow-md);
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.control-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.control-btn:active {
+    transform: translateY(0);
+}
+
+.control-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3), var(--shadow-md);
+}
+
+.control-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.7);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%, -50%);
+    transform-origin: 50% 50%;
+}
+
+.control-btn:active::after {
+    animation: ripple 0.6s ease-out;
+}
+
+/* 动画效果 */
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(20, 20);
+        opacity: 0;
+    }
+}
+
+@keyframes breatheAnimation {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(56, 189, 248, 0);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 30px 5px rgba(56, 189, 248, 0.3);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(56, 189, 248, 0);
+    }
+}
+
+@keyframes holdAnimation {
+    0% {
+        box-shadow: 0 0 15px 2px rgba(251, 146, 60, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 25px 5px rgba(251, 146, 60, 0.4);
+    }
+    100% {
+        box-shadow: 0 0 15px 2px rgba(251, 146, 60, 0.2);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.timer.breathe-active {
+    animation: breatheAnimation 4s infinite ease-in-out;
+}
+
+.timer.hold-active {
+    animation: holdAnimation 2s infinite ease-in-out;
+}
+
+/* 增强过渡效果 */
+.phase-name, .time-left, .phase-instruction {
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 响应式布局 */
+@media (max-width: 480px) {
+    body {
+        padding: 1rem;
+    }
+    
+    .timer-container {
+        padding: 1.5rem;
+        max-width: 100%;
+    }
+
+    .app-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .settings {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .setting-item {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    
+    .timer {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .time-left {
+        font-size: 3.5rem;
+    }
+}
+
+/* 添加GitHub链接样式 */
+.github-link {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.github-link a {
+    color: #333;
+    text-decoration: none;
+    transition: var(--transition-fast);
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3rem 0.8rem;
+    background-color: #f6f8fa;
+    border: 1px solid #e1e4e8;
+    border-radius: var(--border-radius);
+}
+
+.github-link a:hover {
+    background-color: #f3f4f6;
+    text-decoration: none;
+    color: #000;
+}
+
+.github-link .fab {
+    font-size: 1.1em;
+}

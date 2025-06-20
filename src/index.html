@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainFog Reliever - 脑雾缓解呼吸法</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header class="app-header">
+        <h1><i class="fas fa-lungs"></i> BrainFog Reliever</h1>
+        <p class="description">脑雾缓解呼吸法 - 一个简单的工具，帮助您通过呼吸练习清晰思维。</p>
+    </header>
+
+    <main class="timer-container">
+        <div class="settings" id="settings-panel">
+            <div class="setting-item">
+                <label for="total-duration"><i class="fas fa-clock"></i> 总时长 (分钟):</label>
+                <select id="total-duration">
+                    <option value="180">3</option>
+                    <option value="240" selected>4</option>
+                    <option value="300">5</option>
+                </select>
+            </div>
+            <div class="setting-item">
+                <label for="hold-duration"><i class="fas fa-pause"></i> 屏息时长 (秒):</label>
+                <select id="hold-duration">
+                    <option value="3">3</option>
+                    <option value="4" selected>4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+            <div class="setting-item">
+                <label for="sound-toggle"><i class="fas fa-volume-up"></i> 声音提示:</label>
+                <input type="checkbox" id="sound-toggle" class="sound-checkbox">
+            </div>
+        </div>
+
+        <div class="timer">
+            <svg class="progress-ring" width="280" height="280">
+                <circle class="progress-ring__bg" cx="140" cy="140" r="120" />
+                <circle class="progress-ring__fg" id="progress-fg" cx="140" cy="140" r="120" />
+            </svg>
+            <div class="timer-display" id="timer-display">
+                <p class="phase-name" id="phase-name">Ready</p>
+                <p class="time-left" id="time-left">4:00</p>
+                <p class="phase-instruction" id="phase-instruction">准备开始呼吸练习</p>
+            </div>
+        </div>
+
+        <button class="control-btn" id="control-btn"><i class="fas fa-play"></i> 开始</button>
+    </main>
+
+    <footer class="app-footer">
+        <p><a href="https://www.youtube.com/watch?v=wjZL0llp5Ac" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i> 灵感来源</a>：YouTube 视频。 本工具仅为辅助，不做任何医疗建议。</p>
+    </footer>
+</body>
+</html>
